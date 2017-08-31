@@ -470,8 +470,10 @@ class CalvinNetwork(object):
         """
         status = kwargs.pop('status', True)
         if not status:
-            callback(peer_id, None, status)
-
+            # Failed to establish link, retry
+            async.DelayedCall(0.5, self.link_request, peer_id, callback=callback)
+            return
+            
         if peer_id in self._links:
             # We have a link lets give it back
             self._callback_link(peer_id, callback)
