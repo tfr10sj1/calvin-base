@@ -19,7 +19,7 @@ import ply.lex as lex
 # Make sure we have an initial value for zerocol
 lex.Lexer.zerocol = 0
 
-keywords = {x:x.upper() for x in ['component', 'define', 'voidport', 'rule', 'group', 'apply']}
+keywords = {x:x.upper() for x in ['component', 'define', 'voidport', 'rule', 'group', 'apply', 'applyx']}
 
 tokens = [
     'IDENTIFIER', 'STRING', 'NUMBER',

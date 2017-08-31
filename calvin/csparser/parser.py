@@ -136,7 +136,8 @@ class CalvinParser(object):
                      | link
                      | define_rule
                      | group
-                     | apply"""
+                     | apply
+                     | applyx"""
         p[0] = p[1]
 
 
@@ -448,6 +449,10 @@ class CalvinParser(object):
         # or possibly
         # """apply : APPLY rule COLON identifiers"""
         p[0] = ast.RuleApply(optional=False, targets=p[2], rule=p[4], debug_info=self.debug_info(p,1))
+
+    def p_applyx(self, p):
+        """applyx : APPLYX qualified_name COLON rule"""
+        p[0] = ast.RuleApply(optional=False, targets=[ast.Id(ident=p[2])], rule=p[4], debug_info=self.debug_info(p,1))
 
     def p_group(self, p):
         """group : GROUP identifier COLON identifiers"""

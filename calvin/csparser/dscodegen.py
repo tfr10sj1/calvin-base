@@ -79,6 +79,9 @@ class DeployInfo(object):
         self.requirements = {}
         self.visit(self.root)
 
+    def _transform_name(self, name):
+        return name.replace('.', ':')
+
     @visitor.on('node')
     def visit(self, node):
         pass
@@ -92,7 +95,7 @@ class DeployInfo(object):
     def visit(self, node):
         rule = self.visit(node.rule)
         for t in node.targets:
-            self.requirements[t.ident] = rule
+            self.requirements[self._transform_name(t.ident)] = rule
 
     @visitor.when(ast.RulePredicate)
     def visit(self, node):
