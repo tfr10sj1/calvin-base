@@ -1,0 +1,21 @@
+component Load() in -> out {
+    state : flow.Init(data=0)
+    add : math.Compute(op="+")
+
+    .in > /1/ add.a
+    state.out > add.b
+    add.result > state.in, .out
+}
+
+source : std.Trigger(tick=0.5, data=true)
+time_0 : time.Timestamp()
+time_1 : time.Timestamp()
+load : Load()
+time_delta : math.Compute(op="-")
+sink : io.List_to_file()
+
+source.data > time_0.trigger, load.in
+load.out > time_1.trigger
+time_1.timestamp > time_delta.a
+time_0.timestamp > time_delta.b
+time_delta.result > sink.token

@@ -1,0 +1,8 @@
+ten : std.Constant(data=10)
+five : std.Constant(data=5)
+div : math.InputDiv()
+out : io.Print()
+
+ten.token > div.dividend
+five.token > div.divisor
+div.result > out.token
